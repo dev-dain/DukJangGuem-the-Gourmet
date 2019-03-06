@@ -63,13 +63,13 @@ def message(request):
     go_main_button = '초기화면'
     today_wday = localtime().tm_wday
     today_now = datetime.now()
-    file_path = '/home/ubuntu/project_Bluebook/haksikE/weekMeal.txt'
+    file_path = '/home/ubuntu/project_Bluebook/haksikE/week_meal.txt'
     # open에는 full 경로 설정 필수
     in_fp = open(file_path, 'r', encoding='utf-8')
     
-    temp_list = []
+    meal_list = []
     for line in in_fp.readlines():
-        temp_list.append(line)
+        meal_list.append(line)
     
     temp_str = ''
     for line in temp_list:
@@ -80,28 +80,23 @@ def message(request):
     meal_list = temp_str.split('\n\n')
     in_fp.close()
     
-    for i in range(8, 15):
+    for i in range(10):
         if meal_list[i]=='\xa0' or meal_list[i]=='\r\r' or len(meal_list[i])<12:
-            meal_list[i]+='학식이 없는 날이거나 홈페이지에 등록되지 않았습니다.'
+            meal_list[i]+='\n학식이 없는 날이거나 홈페이지에 등록되지 않았습니다.'
     add_text=''
 
-    for i in range(8, 13):
-        for j in range(len(meal_list[i])):
-            if meal_list[i][j]=='*':
-                if j==0:
-                    add_text+='학식 제공시간: 11:00~18:30\n:: 4000원 ::\n'
-                else:
-                    add_text+='<택1>\n\n학식 제공시간: 11:00~14:00\n:: 5000원 ::\n'
-                add_text+=meal_list[i][j]
-            else:
-                add_text+=meal_list[i][j]
+    for i in range(10):
+	if i < 5:
+		add_text += '학식 제공시간: 11:00~18:30\n:: 4000원 ::\n'
+	if i >= 5:
+	    add_text += '<택1>\n\n학식 제공시간: 11:00~14:00\n:: 5000원 ::\n'
         meal_list[i]=add_text
         add_text=''
 
-    day = {'mon': meal_list[8], 'tue': meal_list[9], 'wed': meal_list[10], 
-            'thu': meal_list[11], 'fri': meal_list[12], 'every': meal_list[14]}
-    date = {'mon': meal_list[2], 'tue': meal_list[3], 'wed': meal_list[4],
-            'thu': meal_list[5], 'fri': meal_list[6]}
+    student_day = {'mon': meal_list[0], 'tue': meal_list[1], 
+		'wed': meal_list[2], 'thu': meal_list[3], 'fri': meal_list[4]}
+    teacher_day = {'mon': meal_list[5], 'tue': meal_list[6],
+		'wed': meal_list[7], 'thu': meal_list[8], 'fri': meal_list[9]}
     
     # 분기문
     if return_str=='오늘':
@@ -123,7 +118,8 @@ def message(request):
                 'message': {
                     'text': ''+today_now.strftime('%m월 %d')+'일\n'\
                             '오늘의 학식입니다.\n\n'+
-                            day[wday_arr[today_wday]]
+                            student_day[wday_arr[today_wday]]+
+			    teacher_day[wday_arr[today_wday]]
                 },
                 'keyboard': {
                     'type': 'buttons',
@@ -152,7 +148,8 @@ def message(request):
                     'text': today_now.strftime('%m월 ')+
                             date[wday_arr[(today_wday+1)%7]]+'\n'+
                             '내일 학식입니다.\n\n'+ 
-                            day[wday_arr[(today_wday+1)%7]]
+                            student_day[wday_arr[(today_wday+1)%7]]+
+			    teacher_day[wday_arr[(today_wday+1)%7]]
                 },
                 'keyboard': {
                     'type': 'buttons',
@@ -180,7 +177,7 @@ def message(request):
             'message': {
                 'text': '상시메뉴입니다.\n\n'\
                         '학식 제공시간: 10:00~18:30\n:: 4000원 ::\n'\
-                        ''+day['every']+'\n<택1>'
+                        '등심돈까스&매시드포테이토\n새우우동&주먹밥\n<택1>'
             },
             'keyboard': {
                 'type': 'buttons',
@@ -224,7 +221,8 @@ def message(request):
         {
             'message': {
                 'text': today_now.strftime('%m월 ')+date['mon']+
-                        ' 학식입니다.\n\n'+day['mon']
+                        ' 학식입니다.\n\n'+
+			student_day['mon']+''+teacher_day['mon']
             },
             'keyboard': {
                 'type': 'buttons',
@@ -238,7 +236,8 @@ def message(request):
         {
             'message': {
                 'text': today_now.strftime('%m월 ')+date['tue']+
-                        ' 학식입니다.\n\n'+day['tue']
+                        ' 학식입니다.\n\n'+
+			student_day['tue']+''+teacher_day['tue']
             },
             'keyboard': {
                 'type': 'buttons',
@@ -252,7 +251,8 @@ def message(request):
         {
             'message': {
                 'text': today_now.strftime('%m월 ')+date['wed']+
-                        ' 학식입니다.\n\n'+day['wed']
+                        ' 학식입니다.\n\n'+
+			student_day['wed']+''+teacher_day['wed']
             },
             'keyboard': {
                 'type': 'buttons',
@@ -266,7 +266,8 @@ def message(request):
         {
             'message': {
                 'text': today_now.strftime('%m월 ')+date['thu']+
-                        ' 학식입니다.\n\n'+day['thu']
+                        ' 학식입니다.\n\n'+
+			student_day['thu']+''+teacher_day['thu']
             },
             'keyboard': {
                 'type': 'buttons',
@@ -280,7 +281,8 @@ def message(request):
         {
             'message': {
                 'text': today_now.strftime('%m월 ')+date['fri']+
-                        ' 학식입니다.\n\n'+day['fri']
+                        ' 학식입니다.\n\n'+
+			student_day['fri']+''+teacher_day['fri']
             },
             'keyboard': {
                 'type': 'buttons',
