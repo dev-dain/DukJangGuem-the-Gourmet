@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
+import os
 
 options = Options()
 options.headless = True
@@ -22,10 +23,20 @@ for i in range(len(temp_str)) :
     # get_text('\n')이 <br /> 코드를 '\n'으로 바꿔줌
 
 for j in range(len(info_str)) :
-    info_str[j] = info_str[j].get_text('\n')
+    info_str[j] = info_str[j].get_text('\n')+'\r\r'
 
-out_fp = open('week_meal.txt', 'w', encoding='utf-8')
-out_fp.writelines(temp_str)
+if os.path.exists('week_meal.txt'):
+    os.remove('week_meal.txt')
 
-out_fp.close()
+meal_fp = open('week_meal.txt', 'w', encoding='utf-8')
+meal_fp.writelines(temp_str)
+meal_fp.close()
+
+if os.path.exists('week_info.txt'):
+    os.remove('week_info.txt')
+
+info_fp = open('week_info.txt', 'w', encoding='utf-8')
+info_fp.writelines(info_str)
+info_fp.close()
+
 driver.close()
