@@ -107,9 +107,13 @@ def message(request):
     add_text = ''
     for j in range(10):
         if j < 5:
-            add_text += '학식 제공시간: 11:00~18:30\n:: 4000원 ::\n'
+            add_text += '*'
+            add_text += info_list[6]
+            add_text += '\n학식 제공시간: 11:00~18:30\n:: 4000원 ::\n'
         if j >= 5:
-            add_text += '\n<택1>\n\n학식 제공시간: 11:00~14:00\n:: 5000원 ::\n'
+            add_text += '\n<택1>\n\n*'
+            add_text += info_list[7]
+            add_text += '\n학식 제공시간: 11:00~14:00\n:: 5000원 ::\n'
         add_text += meal_list[j]
         meal_list[j] = add_text
         add_text = ''
@@ -119,8 +123,7 @@ def message(request):
     e_day = {'mon': meal_list[5], 'tue': meal_list[6], 'wed': meal_list[7], 
 		'thu': meal_list[8], 'fri': meal_list[9]}
     info = {'mon': info_list[1], 'tue': info_list[2], 'wed': info_list[3],
-		'thu': info_list[4], 'fri': info_list[5],
-		'st': info_list[6], 'emp': info_list[7]}
+		'thu': info_list[4], 'fri': info_list[5]}
 
 
     # 분기문
