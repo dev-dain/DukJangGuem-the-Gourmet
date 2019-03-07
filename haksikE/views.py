@@ -110,7 +110,7 @@ def message(request):
             add_text += '*'
             add_text += info_list[6]
             add_text += '\n학식 제공시간: 11:00~18:30\n:: 4000원 ::\n'
-        if j >= 5:
+        else:
             add_text += '\n<택1>\n\n*'
             add_text += info_list[7]
             add_text += '\n학식 제공시간: 11:00~14:00\n:: 5000원 ::\n'

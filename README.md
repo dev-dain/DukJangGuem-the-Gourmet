@@ -10,5 +10,8 @@
 - Django 2.1.7
 - Apache 2.4.18
 - beautifulsoup4
+- selenium 3.141.0
+- Mozilla Firefox 65.0.1
+- geckodriver 0.24.0
 - requests
 - lxml
