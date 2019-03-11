@@ -1,6 +1,8 @@
+# 다음주 식단을 미리 크롤링함
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
+from time import sleep
 import os
 
 options = Options()
@@ -10,6 +12,9 @@ driver = webdriver.Firefox(options=options)
 driver.implicitly_wait(5)
 driver.get('http://www.duksung.ac.kr/diet/schedule.do?menuId=1151')
 driver.implicitly_wait(5)
+
+driver.execute_script('nextWeekday(1)')
+sleep(3)
 
 html = driver.page_source
 soup = BeautifulSoup(html, 'lxml')

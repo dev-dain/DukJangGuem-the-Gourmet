@@ -100,7 +100,7 @@ def message(request):
     info_list = [tmp for tmp in info_list if tmp]
     info_fp.close()
 
-    for i in range(10):
+    for i in range(11):
         if meal_list[i] == '\xa0' or meal_list[i] == '\r\r':
             meal_list[i] += '\n학식이 없는 날이거나 홈페이지에 등록되지 않았습니다.'
 
@@ -109,17 +109,17 @@ def message(request):
         if j < 5:
             add_text += '*'
             add_text += info_list[6]
-            add_text += '\n학식 제공시간: 11:00~18:30\n:: 4000원 ::\n'
+            add_text += '\n:: 4000원 ::\n'
         else:
             add_text += '\n<택1>\n\n*'
             add_text += info_list[7]
-            add_text += '\n학식 제공시간: 11:00~14:00\n:: 5000원 ::\n'
+            add_text += '\n:: 5000원 ::\n'
         add_text += meal_list[j]
         meal_list[j] = add_text
         add_text = ''
 
     s_day = {'mon': meal_list[0], 'tue': meal_list[1], 'wed': meal_list[2], 
-		'thu': meal_list[3], 'fri': meal_list[4]}
+	'thu': meal_list[3], 'fri': meal_list[4], 'every': meal_list[10]}
     e_day = {'mon': meal_list[5], 'tue': meal_list[6], 'wed': meal_list[7], 
 		'thu': meal_list[8], 'fri': meal_list[9]}
     info = {'mon': info_list[1], 'tue': info_list[2], 'wed': info_list[3],
@@ -202,9 +202,7 @@ def message(request):
         return JsonResponse(
         {
             'message': {
-                'text': '상시메뉴입니다.\n\n'\
-			'학식 제공시간: 10:00~18:30\n:: 4000원 ::\n'\
-			'등심돈까스&매시드포테이토\n새우우동&주먹밥\n<택1>'
+                'text': '학식 제공시간: 10:00~18:30\n:: 4000원 ::\n'+s_day['every']
             },
             'keyboard': {
                 'type': 'buttons',
