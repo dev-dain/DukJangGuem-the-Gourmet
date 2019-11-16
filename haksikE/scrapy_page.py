@@ -2,6 +2,7 @@
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
+from time import sleep
 import os
 import sys
 
@@ -15,6 +16,8 @@ def get_html(driver, url):
     driver.implicitly_wait(5)
     driver.get(url)
     driver.implicitly_wait(5)
+    sleep(3) #sleep이 있어야 dietTime class와 dietNoteContent id 콘텐츠를 볼 수 있음
+
     html = driver.page_source
     return html
 
