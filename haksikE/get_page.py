@@ -2,14 +2,16 @@
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
+from time import sleep
 
 options = Options()
 options.headless = True
 
 driver = webdriver.Firefox(options=options)
-driver.implicitly_wait(100)
+driver.implicitly_wait(5)
 driver.get('http://www.duksung.ac.kr/diet/schedule.do?menuId=1151')
-driver.implicitly_wait(100)
+driver.implicitly_wait(5)
+sleep(3)
 
 html = driver.page_source
 out_fp = open("page.html", "w", encoding="utf-8")
